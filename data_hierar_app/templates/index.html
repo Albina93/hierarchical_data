@@ -1,0 +1,21 @@
+<a href="{% url 'login_page' %}">LOGIN</a>
+<a href="{% url 'create_page' %}">Create Movie</a>
+<a href="{% url 'logout_page' %}">LOGOUT</a>
+
+{% if request.user.is_authenticated %}
+<h3>{{ request.user.username }}</h3>
+{% endif %}
+
+{% load mptt_tags %}
+<ul>
+    {% recursetree movies %}
+        <li>
+            {{ node.name }}
+            {% if not node.is_leaf_node %}
+                <ul class="children">
+                    {{ children }}
+                </ul>
+            {% endif %}
+        </li>
+    {% endrecursetree %}
+</ul>
